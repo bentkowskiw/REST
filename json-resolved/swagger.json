@@ -248,8 +248,12 @@
     },
     "Product" : {
       "type" : "object",
-      "required" : [ "SKU", "name", "price" ],
+      "required" : [ "SKU", "id", "name", "price" ],
       "properties" : {
+        "id" : {
+          "type" : "number",
+          "format" : "int64"
+        },
         "SKU" : {
           "type" : "string",
           "example" : "A1001"
