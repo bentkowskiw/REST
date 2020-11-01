@@ -29,9 +29,11 @@ public class ProductRestController implements ProductRestApi {
     @Override
     @org.springframework.transaction.annotation.Transactional
     public Product updateProduct(Product product, String SKU) {
-        return productRepository.findById(SKU)
+        Product persistent = productRepository.findById(SKU)
                 .orElseThrow(new NonExistentEntityException(Product.class, SKU));
-
+        persistent.setName(product.getName());
+        persistent.setPrice(product.getPrice());
+        return productRepository.save(persistent);
     }
 
     @Override

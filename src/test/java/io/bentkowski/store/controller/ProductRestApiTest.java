@@ -64,8 +64,25 @@ class ProductRestApiTest {
     }
 
     @Test
-    void updateProduct() {
+    void updateProduct() throws Exception {
+        Product product2 = new Product("Yellow Sunglasses", "SUMMER-001", 0.01d);
+        mockMvc.perform(MockMvcRequestBuilders
+                .post("/products")
+                .content(asJsonString(product2))
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .accept(MediaType.APPLICATION_JSON)
+        )
+                .andExpect(status().isOk());
+
+        mockMvc.perform(MockMvcRequestBuilders
+                .put("/products/" + product2.getSKU())
+                .content(asJsonString(product2))
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .accept(MediaType.APPLICATION_JSON)
+        )
+                .andExpect(status().isOk());
     }
+
 
     @Test
     void findProducts() throws Exception {
