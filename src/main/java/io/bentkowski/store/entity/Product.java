@@ -6,13 +6,15 @@ import org.hibernate.annotations.ResultCheckStyle;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.PreRemove;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Objects;
 
 @Entity
-@Table(name = "PRODUCTS")
+
 @SQLDelete(sql = "UPDATE PRODUCTS SET deleted = 1 WHERE sku = ?", check = ResultCheckStyle.COUNT)
 @Where(clause = "deleted <> 1")
 public class Product implements Serializable {
@@ -20,13 +22,11 @@ public class Product implements Serializable {
     private String name;
 
     @Id
-    @Column(name = "sku")
     private String sku;
 
     @CreationTimestamp
     private Timestamp created;
 
-    @Column(name = "deleted")
     private int deleted;
 
     private Double price;
