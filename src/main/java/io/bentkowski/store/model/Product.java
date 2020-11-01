@@ -13,7 +13,7 @@ public class Product {
     private String name;
 
     @Id
-    private String SKU;
+    private String sku;
 
     @CreationTimestamp
     private Timestamp created;
@@ -25,9 +25,9 @@ public class Product {
     public Product() {
     }
 
-    public Product(String name, String SKU, Double price) {
+    public Product(String name, String sku, Double price) {
         this.name = name;
-        this.SKU = SKU;
+        this.sku = sku;
         this.price = price;
     }
 
@@ -39,12 +39,12 @@ public class Product {
         this.name = name;
     }
 
-    public String getSKU() {
-        return SKU;
+    public String getSku() {
+        return sku;
     }
 
-    public void setSKU(String SKU) {
-        this.SKU = SKU;
+    public void setSku(String SKU) {
+        this.sku = SKU;
     }
 
     public Timestamp getCreated() {
@@ -76,11 +76,11 @@ public class Product {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Product product = (Product) o;
-        return SKU.equals(product.getSKU());
+        return sku.equals(product.getSku());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getSKU());
+        return Objects.hash(getSku());
     }
 }

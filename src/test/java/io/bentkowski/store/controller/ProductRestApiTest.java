@@ -42,7 +42,7 @@ class ProductRestApiTest {
         mockMvc.perform(MockMvcRequestBuilders
                 .post("/products")
                 .content(asJsonString(product))
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
         )
                 .andExpect(status().isOk());
@@ -55,7 +55,7 @@ class ProductRestApiTest {
         mockMvc.perform(MockMvcRequestBuilders
                 .post("/products")
                 .content(asJsonString(product2))
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
         )
                 .andExpect(status().isConflict());
@@ -69,15 +69,15 @@ class ProductRestApiTest {
         mockMvc.perform(MockMvcRequestBuilders
                 .post("/products")
                 .content(asJsonString(product2))
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
         )
                 .andExpect(status().isOk());
 
         mockMvc.perform(MockMvcRequestBuilders
-                .put("/products/" + product2.getSKU())
+                .put("/products/" + product2.getSku())
                 .content(asJsonString(product2))
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
         )
                 .andExpect(status().isOk());
@@ -87,7 +87,7 @@ class ProductRestApiTest {
     @Test
     void findProducts() throws Exception {
         Optional<Product> product = productRepository.findById("SUMMER-001");
-        product.isEmpty();
+
     }
 
     @Test

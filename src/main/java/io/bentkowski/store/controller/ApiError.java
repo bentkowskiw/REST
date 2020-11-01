@@ -37,8 +37,8 @@ public class ApiError {
     private HttpStatus httpStatus;
 
     private ApiError() {
-        timestamp =LocalDateTime.now();
-        validationErrorList = new ArrayList<ApiValidationError>();
+        timestamp = LocalDateTime.now();
+        validationErrorList = new ArrayList<>();
     }
 
     public ApiError(String message, HttpStatus httpStatus) {
