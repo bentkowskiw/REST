@@ -22,7 +22,14 @@ public class Product {
 
     private Double price;
 
+    public Product() {
+    }
 
+    public Product(String name, String SKU, Double price) {
+        this.name = name;
+        this.SKU = SKU;
+        this.price = price;
+    }
 
     public String getName() {
         return name;

@@ -36,7 +36,12 @@ public class ProductRepository implements ProductFinder, ProductSaver, ProductDe
     }
 
     public Product save(Product s) {
-        return productSaver.save(s);
+        Optional optional = productFinder.findById(s.getSKU());
+        if (optional.isEmpty())
+            return productSaver.save(s);
+        else
+            throw new PrimaryKeyNotUniqueException(s.getSKU());
+
     }
 
     public Iterable<Product> findAll(Integer offset, Integer limit) {

@@ -20,6 +20,8 @@ public class ProductSaverImpl implements ProductSaver {
     @Override
     public Product save(Product product) {
         entityManager.persist(product);
+        entityManager.flush();
+        entityManager.refresh(product);
         return product;
     }
 

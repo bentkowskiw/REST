@@ -5,8 +5,6 @@ import io.bentkowski.store.model.Product;
 import io.bentkowski.store.model.ProductRepository;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.transaction.Transactional;
-
 @RestController
 public class ProductRestController implements ProductRestApi {
 
@@ -22,13 +20,14 @@ public class ProductRestController implements ProductRestApi {
     }
 
     @Override
-    @Transactional
+    @org.springframework.transaction.annotation.Transactional
     public Product addProduct(Product product) {
         productRepository.save(product);
         return product;
     }
 
     @Override
+    @org.springframework.transaction.annotation.Transactional
     public Product updateProduct(Product product, String SKU) {
         return productRepository.findById(SKU)
                 .orElseThrow(new NonExistentEntityException(Product.class, SKU));

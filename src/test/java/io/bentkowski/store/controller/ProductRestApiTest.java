@@ -36,37 +36,30 @@ class ProductRestApiTest {
     void addProduct() throws Exception {
 
         //Should be OK
-        Product product = new Product();
-        product.setName("Pink Sunglasses");
-        product.setPrice(89.99d);
-        product.setSKU("SUMMER-001");
+        Product product = new Product("Pink Sunglasses", "SUMMER-001", 89.99d);
 
 
         mockMvc.perform(MockMvcRequestBuilders
                 .post("/products")
                 .content(asJsonString(product))
-                .contentType(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .accept(MediaType.APPLICATION_JSON)
         )
                 .andExpect(status().isOk());
 
-/*
+
         //Duplicate unique key
-        Product product2 = new Product();
-        product.setName("Yellow Sunglasses");
-        product.setPrice(89.99d);
-        product.setSKU("SUMMER-001");
+        Product product2 = new Product("Yellow Sunglasses", "SUMMER-001", 0.01d);
 
 
         mockMvc.perform(MockMvcRequestBuilders
                 .post("/products")
                 .content(asJsonString(product2))
-                .contentType(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .accept(MediaType.APPLICATION_JSON)
         )
                 .andExpect(status().isConflict());
 
-    */
 
     }
 
