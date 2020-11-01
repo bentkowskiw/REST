@@ -37,15 +37,12 @@ public class ProductRestController implements ProductRestApi {
     @Override
     @GetMapping("/products")
     public Iterable<ProductDto> findProducts(@RequestParam(required = false) String offset, @RequestParam(required = false) String limit) {
-        Integer intOffset, intLimit;
-        intOffset = offset != null ? Integer.parseInt(offset) : null;
-        intLimit = limit != null ? Integer.parseInt(limit) : null;
-
-        return productService.findAll(intOffset, intLimit);
+        return productService.findAll(offset, limit);
     }
 
     @Override
-    public void deleteProduct(String SKU) {
+    @DeleteMapping("/products/{SKU}")
+    public void deleteProduct(@PathVariable String SKU) {
 
     }
 }

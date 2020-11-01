@@ -33,7 +33,10 @@ public class ProductService {
 
     }
 
-    public Iterable<ProductDto> findAll(Integer offset, Integer limit) {
+    public Iterable<ProductDto> findAll(String offset, String limit) {
+        Integer intOffset, intLimit;
+        intOffset = offset != null ? Integer.parseInt(offset) : null;
+        intLimit = limit != null ? Integer.parseInt(limit) : null;
 
         Iterable<Product> persistentCollection = productRepository.findAll();
         List<ProductDto> dtoCollection = new LinkedList<>();
@@ -53,7 +56,7 @@ public class ProductService {
         } else throw new NonExistentEntityException(Product.class, product.getSku());
     }
 
-    public Optional<Product> findById(String s) {
+    Optional<Product> findById(String s) {
         return productRepository.findById(s);
     }
 
