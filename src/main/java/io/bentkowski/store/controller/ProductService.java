@@ -30,20 +30,53 @@ public class ProductService {
 
     public Iterable<ProductDto> findAll(Integer offset, Integer limit) {
 
-        Iterable<Product> persitentCollection = productRepository.findAll();
+        Iterable<Product> persistentCollection = productRepository.findAll();
         List<ProductDto> dtoCollection = new LinkedList<>();
-        persitentCollection.forEach(product -> dtoCollection.add(new ProductDto(product)));
+        persistentCollection.forEach(product -> dtoCollection.add(new ProductDto(product)));
         return dtoCollection;
     }
 
+    public ProductDto updateProduct(ProductDto product, String sku) {
+        Optional<Product> optionalProduct = productRepository.findById(sku);
+        if (optionalProduct.isPresent() && Boolean.FALSE == optionalProduct.get().isDeleted()) {
+            validate(product);
+            Product persistent = optionalProduct.get();
+            persistent.setName(product.getName());
+            persistent.setPrice(product.getPrice());
+            productRepository.save(persistent);
+            return new ProductDto(persistent);
+        } else throw new NonExistentEntityException(Product.class, product.getSku());
+    }
 
     public Optional<Product> findById(String s) {
         return productRepository.findById(s);
     }
 
     public void deleteById(String s) {
-        productRepository.deleteById(s);
+        Optional<Product> optionalProduct = productRepository.findById(s);
+        if (productExists(optionalProduct)) {
+            Product persistent = optionalProduct.get();
+            persistent.setDeleted(Boolean.TRUE);
+            productRepository.saveAndFlush(persistent);
+        }
+
     }
 
+    private boolean productExists(Optional<Product> optionalProduct) {
+        if (optionalProduct.isPresent()) {
+            Product entity = optionalProduct.get();
+            return entity.isDeleted() == null || entity.isDeleted() == Boolean.FALSE;
+        }
+        return false;
+    }
+
+    private void validate(ProductDto source) throws ProductValidationError {
+        if (source.getName() == null)
+            source.setName("");
+        double price = source.getPrice() != null ? source.getPrice() : 0d;
+        if (price < 0d)
+            throw new ProductValidationError(source, "price", price);
+        source.setPrice(price);
+    }
 
 }

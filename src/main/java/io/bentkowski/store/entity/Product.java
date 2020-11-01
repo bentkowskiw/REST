@@ -29,8 +29,8 @@ public class Product implements Serializable {
 
     public Product(ProductDto dto) {
         this.sku = dto.getSku();
-        this.name = dto.getName();
-        this.price = dto.getPrice();
+        this.name = dto.getName() == null ? "" : dto.getName();
+        this.price = dto.getPrice() == null ? 0d : dto.getPrice();
     }
 
     public Product(String name, String sku, Double price) {

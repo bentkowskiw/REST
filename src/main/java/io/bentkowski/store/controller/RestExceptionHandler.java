@@ -25,5 +25,11 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(apiError, apiError.getHttpStatus());
     }
 
+    @ExceptionHandler(ApiValidationError.class)
+    protected ResponseEntity<Object> handleApiValidationError(ApiValidationError ex) {
+        ApiError apiError = new ApiError(ex.getMessage(), HttpStatus.BAD_REQUEST);
+        apiError.addApiValidationError(ex);
+        return new ResponseEntity<>(apiError, apiError.getHttpStatus());
+    }
 
 }

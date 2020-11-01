@@ -1,6 +1,5 @@
 package io.bentkowski.store.controller;
 
-import io.bentkowski.store.entity.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,17 +29,9 @@ public class ProductRestController implements ProductRestApi {
     }
 
     @Override
-
-    public Product updateProduct(Product product, String SKU) {
-        /*
-        Product persistent = productService.findById(SKU)
-                .orElseThrow(new NonExistentEntityException(Product.class, SKU));
-        persistent.setName(product.getName());
-        persistent.setPrice(product.getPrice());
-        return productService.save(persistent);
-        */
-
-        return null;
+    @PutMapping("/products/{SKU}")
+    public ProductDto updateProduct(@RequestBody ProductDto product, @PathVariable String SKU) {
+        return productService.updateProduct(product, SKU);
     }
 
     @Override

@@ -19,6 +19,7 @@ public class ApiError {
 
 
     public String getMessage() {
+
         return message;
     }
 
@@ -41,22 +42,14 @@ public class ApiError {
         validationErrorList = new ArrayList<>();
     }
 
+    public void addApiValidationError(ApiValidationError error) {
+        this.validationErrorList.add(error);
+    }
+
     public ApiError(String message, HttpStatus httpStatus) {
         this.message = message;
         this.httpStatus = httpStatus;
     }
 
-    static class ApiValidationError    {
-        Object object;
-        String field;
-        Object rejected;
-        String message;
 
-        public ApiValidationError(Object object, String field, Object rejected, String message) {
-            this.object = object;
-            this.field = field;
-            this.rejected = rejected;
-            this.message = message;
-        }
-    }
 }
