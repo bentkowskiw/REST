@@ -1,12 +1,20 @@
 package io.bentkowski.store.controller;
 
 
-public class ApiValidationError extends RuntimeException {
+import java.util.function.Supplier;
+
+public class ApiValidationError extends RuntimeException implements Supplier {
 
     Object object;
     String field;
     Object rejected;
     String message;
+
+    @Override
+    public Object get() {
+        return this;
+    }
+
 
     public ApiValidationError(Object object, String field, Object rejected) {
         this.object = object;

@@ -19,11 +19,6 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(apiError, apiError.getHttpStatus());
     }
 
-    @ExceptionHandler(Exception.class)
-    protected ResponseEntity<Object> handleGeneralException(Exception ex) {
-        ApiError apiError = new ApiError(ex.getMessage(), HttpStatus.BAD_REQUEST);
-        return new ResponseEntity<>(apiError, apiError.getHttpStatus());
-    }
 
 
     @ExceptionHandler(PrimaryKeyNotUniqueException.class)
@@ -38,5 +33,19 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         apiError.addApiValidationError(ex);
         return new ResponseEntity<>(apiError, apiError.getHttpStatus());
     }
+
+    @ExceptionHandler(NumberFormatException.class)
+    protected ResponseEntity<Object> handleNumberFormatException(NumberFormatException ex) {
+        ApiError apiError = new ApiError(ex.getMessage(), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(apiError, apiError.getHttpStatus());
+    }
+
+
+    @ExceptionHandler(Exception.class)
+    protected ResponseEntity<Object> handleGeneralException(Exception ex) {
+        ApiError apiError = new ApiError(ex.getMessage(), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(apiError, apiError.getHttpStatus());
+    }
+
 
 }

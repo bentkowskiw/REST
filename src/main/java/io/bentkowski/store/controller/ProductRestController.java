@@ -41,8 +41,8 @@ public class ProductRestController implements ProductRestApi {
     }
 
     @Override
-    @DeleteMapping("/products/{SKU}")
-    public void deleteProduct(@PathVariable String SKU) {
-
+    @DeleteMapping("/products/{sku}")
+    public void deleteProduct(@PathVariable String sku) {
+        productService.deleteById(sku);
     }
 }

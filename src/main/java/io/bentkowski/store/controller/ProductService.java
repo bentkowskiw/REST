@@ -75,6 +75,7 @@ public class ProductService {
         double price = source.getPrice() != null ? source.getPrice() : 0d;
         if (price < 0d)
             throw new ProductValidationError(source, "price", price);
+
         source.setPrice(price);
     }
 
