@@ -43,6 +43,8 @@ class ProductServiceUnitTest {
             productService.save(p2);
         });
 
+        final ProductDto p3 = new ProductDto("r2d2", "name2", -1.0d);
+        assertThrows(ProductValidationError.class, () -> productService.save(p3));
 
     }
 
@@ -50,6 +52,14 @@ class ProductServiceUnitTest {
     @Test
     void findAll() {
 
+
+        assertEquals(MAX, numberOfProductsFound());
+        productService.deleteById("PRODUCT-1");
+        assertEquals(MAX - 1, numberOfProductsFound());
+
+    }
+
+    private int numberOfProductsFound() {
         Iterable<ProductDto> products = productService.findAll(null, null);
         int i = 0;
         Iterator<ProductDto> iterator = products.iterator();
@@ -58,9 +68,7 @@ class ProductServiceUnitTest {
             assertNotNull(p);
             i++;
         }
-        assertEquals(MAX, i);
-
-
+        return i;
     }
 
 

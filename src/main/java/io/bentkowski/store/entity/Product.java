@@ -15,7 +15,7 @@ import java.util.Objects;
 
 @Entity
 
-@SQLDelete(sql = "UPDATE PRODUCTS SET deleted = 1 WHERE sku = ?", check = ResultCheckStyle.COUNT)
+@SQLDelete(sql = "UPDATE PRODUCT SET deleted = 1 WHERE sku = ?", check = ResultCheckStyle.COUNT)
 @Where(clause = "deleted <> 1")
 public class Product implements Serializable {
 

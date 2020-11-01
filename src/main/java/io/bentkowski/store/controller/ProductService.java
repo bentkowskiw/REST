@@ -21,6 +21,7 @@ public class ProductService {
 
 
         if (!productRepository.existsById(s.getSku())) {
+            validate(s);
             Product persistent = new Product(s);
             productRepository.saveAndFlush(persistent);
 
