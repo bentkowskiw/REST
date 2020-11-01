@@ -19,8 +19,15 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(apiError, apiError.getHttpStatus());
     }
 
+    @ExceptionHandler(Exception.class)
+    protected ResponseEntity<Object> handleGeneralException(Exception ex) {
+        ApiError apiError = new ApiError(ex.getMessage(), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(apiError, apiError.getHttpStatus());
+    }
+
+
     @ExceptionHandler(PrimaryKeyNotUniqueException.class)
-    protected ResponseEntity<Object> handleNonuniquePrimaryKey(PrimaryKeyNotUniqueException ex) {
+    protected ResponseEntity<Object> handlePrimaryKeyNotUniqueException(PrimaryKeyNotUniqueException ex) {
         ApiError apiError = new ApiError(ex.getMessage(), HttpStatus.CONFLICT);
         return new ResponseEntity<>(apiError, apiError.getHttpStatus());
     }

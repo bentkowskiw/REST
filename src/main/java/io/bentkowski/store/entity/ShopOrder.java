@@ -2,14 +2,13 @@ package io.bentkowski.store.entity;
 
 import org.hibernate.annotations.CreationTimestamp;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.Objects;
 
-
+@Entity
+@Table(name = "ORDERS")
 public class ShopOrder {
 
     @Id

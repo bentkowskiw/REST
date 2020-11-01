@@ -19,12 +19,16 @@ public class ProductService {
 
     public ProductDto save(ProductDto s) {
 
-        if (!productRepository.findById(s.getSku()).isPresent()) {
+
+        if (!productRepository.existsById(s.getSku())) {
             Product persistent = new Product(s);
             productRepository.saveAndFlush(persistent);
+
             return new ProductDto(persistent);
-        } else
+        } else {
             throw new PrimaryKeyNotUniqueException(s.getSku());
+        }
+
 
     }
 
@@ -38,7 +42,7 @@ public class ProductService {
 
     public ProductDto updateProduct(ProductDto product, String sku) {
         Optional<Product> optionalProduct = productRepository.findById(sku);
-        if (optionalProduct.isPresent() && Boolean.FALSE == optionalProduct.get().isDeleted()) {
+        if (optionalProduct.isPresent()) {
             validate(product);
             Product persistent = optionalProduct.get();
             persistent.setName(product.getName());
@@ -54,21 +58,12 @@ public class ProductService {
 
     public void deleteById(String s) {
         Optional<Product> optionalProduct = productRepository.findById(s);
-        if (productExists(optionalProduct)) {
-            Product persistent = optionalProduct.get();
-            persistent.setDeleted(Boolean.TRUE);
-            productRepository.saveAndFlush(persistent);
-        }
-
-    }
-
-    private boolean productExists(Optional<Product> optionalProduct) {
         if (optionalProduct.isPresent()) {
-            Product entity = optionalProduct.get();
-            return entity.isDeleted() == null || entity.isDeleted() == Boolean.FALSE;
-        }
-        return false;
+            Product persistent = optionalProduct.get();
+            productRepository.deleteById(s);
+        } else throw new NonExistentEntityException(Product.class, s);
     }
+
 
     private void validate(ProductDto source) throws ProductValidationError {
         if (source.getName() == null)

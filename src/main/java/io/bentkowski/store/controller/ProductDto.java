@@ -4,6 +4,7 @@ import io.bentkowski.store.entity.Product;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 public class ProductDto implements Serializable {
     private String sku;
@@ -11,10 +12,10 @@ public class ProductDto implements Serializable {
     private LocalDateTime created;
     private Double price;
 
-    public ProductDto(String sku, String name, LocalDateTime created, Double price) {
+    public ProductDto(String sku, String name, Double price) {
         this.sku = sku;
         this.name = name;
-        this.created = created;
+
         this.price = price;
     }
 
@@ -55,5 +56,18 @@ public class ProductDto implements Serializable {
 
     public void setPrice(Double price) {
         this.price = price;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ProductDto that = (ProductDto) o;
+        return getSku().equals(that.getSku());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getSku());
     }
 }

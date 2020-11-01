@@ -2,25 +2,32 @@ package io.bentkowski.store.entity;
 
 import io.bentkowski.store.controller.ProductDto;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.ResultCheckStyle;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Objects;
 
 @Entity
+@Table(name = "PRODUCTS")
+@SQLDelete(sql = "UPDATE PRODUCTS SET deleted = 1 WHERE sku = ?", check = ResultCheckStyle.COUNT)
+@Where(clause = "deleted <> 1")
 public class Product implements Serializable {
 
     private String name;
 
     @Id
+    @Column(name = "sku")
     private String sku;
 
     @CreationTimestamp
     private Timestamp created;
 
-    private Boolean deleted;
+    @Column(name = "deleted")
+    private int deleted;
 
     private Double price;
 
@@ -29,8 +36,8 @@ public class Product implements Serializable {
 
     public Product(ProductDto dto) {
         this.sku = dto.getSku();
-        this.name = dto.getName() == null ? "" : dto.getName();
-        this.price = dto.getPrice() == null ? 0d : dto.getPrice();
+        this.name = dto.getName();
+        this.price = dto.getPrice();
     }
 
     public Product(String name, String sku, Double price) {
@@ -63,11 +70,11 @@ public class Product implements Serializable {
         this.created = dateCreated;
     }
 
-    public Boolean isDeleted() {
+    public int getDeleted() {
         return deleted;
     }
 
-    public void setDeleted(Boolean deleted) {
+    public void setDeleted(int deleted) {
         this.deleted = deleted;
     }
 
@@ -87,8 +94,16 @@ public class Product implements Serializable {
         return sku.equals(product.getSku());
     }
 
+
     @Override
     public int hashCode() {
         return Objects.hash(getSku());
     }
+
+    @PreRemove
+    public void deleteProduct() {
+        this.deleted = 1;
+    }
+
+
 }
