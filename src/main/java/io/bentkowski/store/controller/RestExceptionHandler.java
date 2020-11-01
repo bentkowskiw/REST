@@ -1,6 +1,7 @@
 package io.bentkowski.store.controller;
 
 import io.bentkowski.store.model.NonExistentEntityException;
+import io.bentkowski.store.model.PrimaryKeyNotUniqueException;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
@@ -17,6 +18,13 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(NonExistentEntityException.class)
     protected ResponseEntity<Object> handleNonExistentEntity(NonExistentEntityException ex) {
         ApiError apiError = new ApiError(ex.getMessage(), HttpStatus.NOT_FOUND);
-        return new ResponseEntity<>(apiError,apiError.getHttpStatus());
+        return new ResponseEntity<>(apiError, apiError.getHttpStatus());
     }
+
+    @ExceptionHandler(PrimaryKeyNotUniqueException.class)
+    protected ResponseEntity<Object> handleNonuniquePrimaryKey(PrimaryKeyNotUniqueException ex) {
+        ApiError apiError = new ApiError(ex.getMessage(), HttpStatus.CONFLICT);
+        return new ResponseEntity<>(apiError, apiError.getHttpStatus());
+    }
+
 }

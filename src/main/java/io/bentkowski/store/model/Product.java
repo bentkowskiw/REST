@@ -1,7 +1,9 @@
 package io.bentkowski.store.model;
 
 import org.hibernate.annotations.CreationTimestamp;
-import javax.persistence.*;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.sql.Timestamp;
 import java.util.Objects;
 

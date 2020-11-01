@@ -11,7 +11,7 @@ public class ProductFinderImpl implements ProductFinder {
 
     @Override
     public Optional<Product> findById(String s) {
-        return null;
+       return Optional.of(entityManager.find(Product.class, s));
     }
 
 
