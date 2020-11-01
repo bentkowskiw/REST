@@ -1,14 +1,16 @@
-package io.bentkowski.store.model;
+package io.bentkowski.store.entity;
 
+import io.bentkowski.store.controller.ProductDto;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Objects;
 
 @Entity
-public class Product {
+public class Product implements Serializable {
 
     private String name;
 
@@ -23,6 +25,12 @@ public class Product {
     private Double price;
 
     public Product() {
+    }
+
+    public Product(ProductDto dto) {
+        this.sku = dto.getSku();
+        this.name = dto.getName();
+        this.price = dto.getPrice();
     }
 
     public Product(String name, String sku, Double price) {

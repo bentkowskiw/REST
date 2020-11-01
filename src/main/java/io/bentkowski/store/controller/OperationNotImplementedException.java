@@ -1,4 +1,4 @@
-package io.bentkowski.store.model;
+package io.bentkowski.store.controller;
 
 public class OperationNotImplementedException extends RuntimeException{
 

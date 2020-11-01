@@ -1,44 +1,56 @@
 package io.bentkowski.store.controller;
 
-import io.bentkowski.store.model.NonExistentEntityException;
-import io.bentkowski.store.model.Product;
-import io.bentkowski.store.model.ProductRepository;
-import org.springframework.web.bind.annotation.RestController;
+import io.bentkowski.store.entity.Product;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
 
 @RestController
 public class ProductRestController implements ProductRestApi {
 
-    private final ProductRepository productRepository;
+    @Autowired
+    private ProductService productService;
 
-    public ProductRepository getProductRepository() {
-        return productRepository;
+    public ProductRestController() {
+
     }
 
-
-    public ProductRestController(ProductRepository productRepository) {
-        this.productRepository = productRepository;
+    public ProductService getProductService() {
+        return productService;
     }
 
-    @Override
-    @org.springframework.transaction.annotation.Transactional
-    public Product addProduct(Product product) {
-        productRepository.save(product);
-        return product;
+    public void setProductService(ProductService productService) {
+        this.productService = productService;
     }
 
     @Override
-    @org.springframework.transaction.annotation.Transactional
+    @PostMapping("/products")
+    public ProductDto addProduct(@RequestBody ProductDto product) {
+        return productService.save(product);
+    }
+
+    @Override
+
     public Product updateProduct(Product product, String SKU) {
-        Product persistent = productRepository.findById(SKU)
+        /*
+        Product persistent = productService.findById(SKU)
                 .orElseThrow(new NonExistentEntityException(Product.class, SKU));
         persistent.setName(product.getName());
         persistent.setPrice(product.getPrice());
-        return productRepository.save(persistent);
+        return productService.save(persistent);
+        */
+
+        return null;
     }
 
     @Override
-    public Iterable<Product> findProducts(String offset, String limit) {
-        return null;
+    @GetMapping("/products")
+    public Iterable<ProductDto> findProducts(@RequestParam(required = false) String offset, @RequestParam(required = false) String limit) {
+        Integer intOffset, intLimit;
+        intOffset = offset != null ? Integer.parseInt(offset) : null;
+        intLimit = limit != null ? Integer.parseInt(limit) : null;
+
+        return productService.findAll(intOffset, intLimit);
     }
 
     @Override

@@ -1,4 +1,4 @@
-package io.bentkowski.store.model;
+package io.bentkowski.store.controller;
 
 public class PrimaryKeyNotUniqueException extends RuntimeException{
     public PrimaryKeyNotUniqueException(Object id) {

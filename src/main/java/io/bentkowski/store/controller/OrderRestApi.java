@@ -1,7 +1,7 @@
 package io.bentkowski.store.controller;
 
-import io.bentkowski.store.model.Product;
-import io.bentkowski.store.model.ShopOrder;
+import io.bentkowski.store.entity.Product;
+import io.bentkowski.store.entity.ShopOrder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

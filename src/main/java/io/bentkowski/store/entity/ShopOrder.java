@@ -1,8 +1,7 @@
-package io.bentkowski.store.model;
+package io.bentkowski.store.entity;
 
 import org.hibernate.annotations.CreationTimestamp;
 
-import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
@@ -10,7 +9,7 @@ import java.sql.Timestamp;
 import java.util.List;
 import java.util.Objects;
 
-@Entity
+
 public class ShopOrder {
 
     @Id

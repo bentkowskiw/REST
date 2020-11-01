@@ -1,8 +1,7 @@
 package io.bentkowski.store.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.bentkowski.store.model.Product;
-import io.bentkowski.store.model.ProductRepository;
+import io.bentkowski.store.entity.Product;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -22,7 +21,7 @@ class ProductRestApiTest {
     private MockMvc mockMvc;
 
     @MockBean
-    private ProductRepository productRepository;
+    private ProductService productService;
 
     public static String asJsonString(final Object obj) {
         try {
@@ -86,7 +85,7 @@ class ProductRestApiTest {
 
     @Test
     void findProducts() throws Exception {
-        Optional<Product> product = productRepository.findById("SUMMER-001");
+        Optional<Product> product = productService.findById("SUMMER-001");
 
     }
 
