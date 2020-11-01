@@ -10,7 +10,12 @@ import javax.transaction.Transactional;
 @RestController
 public class ProductRestController implements ProductRestApi {
 
-    private ProductRepository productRepository;
+    private final ProductRepository productRepository;
+
+    public ProductRepository getProductRepository() {
+        return productRepository;
+    }
+
 
     public ProductRestController(ProductRepository productRepository) {
         this.productRepository = productRepository;

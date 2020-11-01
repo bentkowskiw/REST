@@ -1,7 +1,7 @@
 package io.bentkowski.store.controller;
 
-import io.bentkowski.store.model.Order;
 import io.bentkowski.store.model.Product;
+import io.bentkowski.store.model.ShopOrder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -11,9 +11,9 @@ public interface OrderRestApi {
 
 
     @PostMapping("/orders")
-    Product addOrder(@RequestBody Order order);
+    Product addOrder(@RequestBody ShopOrder shopOrder);
 
     @GetMapping("/orders")
-    Iterable<Order> findOrdersInPeriod(@RequestParam("beginDate") String beginDate, @RequestParam("endDate") String endDate, @RequestParam(required = false) String offset, @RequestParam(required = false) String limit);
+    Iterable<ShopOrder> findOrdersInPeriod(@RequestParam("beginDate") String beginDate, @RequestParam("endDate") String endDate, @RequestParam(required = false) String offset, @RequestParam(required = false) String limit);
 
 }

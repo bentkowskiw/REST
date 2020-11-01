@@ -2,13 +2,16 @@ package io.bentkowski.store.model;
 
 import org.hibernate.annotations.CreationTimestamp;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.Objects;
 
 @Entity
-public class Order {
+public class ShopOrder {
 
     @Id
     @GeneratedValue
@@ -22,7 +25,7 @@ public class Order {
     @ManyToMany
     private List<Product> products;
 
-    public Order() {
+    public ShopOrder() {
     }
 
     public Long getId() {
@@ -61,8 +64,8 @@ public class Order {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Order order = (Order) o;
-        return getId().equals(order.getId());
+        ShopOrder shopOrder = (ShopOrder) o;
+        return getId().equals(shopOrder.getId());
     }
 
     @Override
