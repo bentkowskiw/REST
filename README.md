@@ -4,22 +4,23 @@
 
  See documentation of API in doc folder
 
-Howto start
+=Howto start
 
 clone locally GitHub repository
 
 git clone https://github.com/bentkowskiw/REST
 
-Howto run
+=Howto run
 
 Run from command line with maven
 
 mvnw spring-boot:run
 
-API
+=API
 The api consists of two main endpoint
 
-Product
+Product:
+
   -tested with unit tests
   
   -tested with MockMvc, curl
@@ -28,6 +29,7 @@ Product
   
   
 Order
+
    -tested with unit tests
    
    -not fully tested with curl
