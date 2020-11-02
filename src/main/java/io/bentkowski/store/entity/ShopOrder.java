@@ -1,6 +1,7 @@
 package io.bentkowski.store.entity;
 
-import org.hibernate.annotations.CreationTimestamp;
+import io.bentkowski.store.controller.ShopOrderDto;
+import org.hibernate.annotations.*;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,6 +12,10 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
+@FilterDef(name = "dateBetween", parameters = {@ParamDef(name = "dateBegin", type = "timestamp"), @ParamDef(name = "dateEnd", type = "timestamp")})
+@Filters({
+        @Filter(name = "dateBetween", condition = ":dateBegin <= created and :dateEnd >= created"),
+})
 public class ShopOrder {
 
     @Id
@@ -24,6 +29,11 @@ public class ShopOrder {
 
     @ManyToMany
     private List<Product> products;
+
+    public ShopOrder(ShopOrderDto order) {
+        this.buyersEmail = order.getBuyersEmail();
+        this.id = order.getId();
+    }
 
     public ShopOrder() {
     }
@@ -52,11 +62,11 @@ public class ShopOrder {
         this.created = created;
     }
 
-    public List getProducts() {
+    public List<Product> getProducts() {
         return products;
     }
 
-    public void setProducts(List products) {
+    public void setProducts(List<Product> products) {
         this.products = products;
     }
 

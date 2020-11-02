@@ -8,10 +8,13 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import java.util.zip.DataFormatException;
+
 
 @Order(Ordered.HIGHEST_PRECEDENCE)
 @ControllerAdvice
 public class RestExceptionHandler extends ResponseEntityExceptionHandler {
+
 
     @ExceptionHandler(NonExistentEntityException.class)
     protected ResponseEntity<Object> handleNonExistentEntity(NonExistentEntityException ex) {
@@ -19,7 +22,11 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(apiError, apiError.getHttpStatus());
     }
 
-
+    @ExceptionHandler(DataFormatException.class)
+    protected ResponseEntity<Object> handleMallformedDate(DataFormatException ex) {
+        ApiError apiError = new ApiError(ex.getMessage(), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(apiError, apiError.getHttpStatus());
+    }
 
     @ExceptionHandler(PrimaryKeyNotUniqueException.class)
     protected ResponseEntity<Object> handlePrimaryKeyNotUniqueException(PrimaryKeyNotUniqueException ex) {
