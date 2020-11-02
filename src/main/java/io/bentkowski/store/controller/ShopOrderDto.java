@@ -17,7 +17,9 @@ public class ShopOrderDto implements Serializable {
     private List<ProductDto> listOfProducts;
 
 
+
     public ShopOrderDto(ShopOrder persistent) {
+        this();
         this.created = persistent.getCreated() != null ? persistent.getCreated().toLocalDateTime() : null;
         this.id = persistent.getId();
         this.buyersEmail = persistent.getBuyersEmail();
@@ -40,7 +42,7 @@ public class ShopOrderDto implements Serializable {
     public ShopOrderDto(String buyersEmail, List<ProductDto> listOfProducts) {
         this();
         this.buyersEmail = buyersEmail;
-        this.listOfProducts = listOfProducts;
+        this.listOfProducts.addAll(listOfProducts);
     }
 
     public LocalDateTime getCreated() {

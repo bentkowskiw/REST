@@ -12,6 +12,10 @@ public class ProductDto implements Serializable {
     private LocalDateTime created;
     private Double price;
 
+    public ProductDto() {
+
+    }
+
     public ProductDto(String sku, String name, Double price) {
         this.sku = sku;
         this.name = name;
