@@ -1,28 +1,40 @@
 # REST
 
-= Example Product RESTful application with Spring Boot framework
-= See documentation of API in doc folder
+ Example Product RESTful application with Spring Boot framework
 
-=Howto start
-==clone locally GitHub repository
+ See documentation of API in doc folder
+
+Howto start
+
+clone locally GitHub repository
+
 git clone https://github.com/bentkowskiw/REST
 
-=Howto run
+Howto run
+
 Run from command line with maven
+
 mvnw spring-boot:run
 
-=API
+API
 The api consists of two main endpoint
 
-==Product
+Product
   -tested with unit tests
+  
   -tested with MockMvc, curl
+  
   -implemented and running POST PUT GET DELETE
   
   
-==Order
+Order
    -tested with unit tests
+   
    -not fully tested with curl
+   
    -not implemented filtering Orders result with date period
    
+   
    Happy testing :)
+   
+   Wojciech Bentkowski
