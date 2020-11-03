@@ -23,7 +23,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(DataFormatException.class)
-    protected ResponseEntity<Object> handleMallformedDate(DataFormatException ex) {
+    protected ResponseEntity<Object> handleMalformedDate(DataFormatException ex) {
         ApiError apiError = new ApiError(ex.getMessage(), HttpStatus.BAD_REQUEST);
         return new ResponseEntity<>(apiError, apiError.getHttpStatus());
     }

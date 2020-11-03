@@ -61,9 +61,8 @@ public class ProductService {
     }
 
     public void deleteById(String s) {
-        Optional<Product> optionalProduct = productRepository.findById(s);
-        if (optionalProduct.isPresent()) {
-            Product persistent = optionalProduct.get();
+        boolean productExists = productRepository.existsById(s);
+        if (productExists) {
             productRepository.deleteById(s);
         } else throw new NonExistentEntityException(Product.class, s);
     }
