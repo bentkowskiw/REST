@@ -2,7 +2,8 @@ package io.bentkowski.store.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.bentkowski.store.entity.Product;
-import org.junit.jupiter.api.Test;
+import org.aspectj.lang.annotation.Before;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -29,6 +30,24 @@ class ProductRestApiTest {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @BeforeEach
+    void setupProductsAndOrders()   throws Exception {
+        int i =0;
+        while (i<10)    {
+            ProductDto product = new ProductDto("SKU-"+i, "NAME-"+i,(double)i/2);
+            productService.save(product);
+            i++;
+        }
+
+    }
+
+
+    @AfterEach
+    void deleteProductsAndOrders()  throws Exception    {
+        Iterable<ProductDto> products = productService.findAll(null,null);
+        products.forEach(product -> productService.deleteById(product.getSku()));
     }
 
     @Test

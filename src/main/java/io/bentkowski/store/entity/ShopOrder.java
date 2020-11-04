@@ -12,10 +12,6 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
-@FilterDef(name = "dateBetween", parameters = {@ParamDef(name = "dateBegin", type = "timestamp"), @ParamDef(name = "dateEnd", type = "timestamp")})
-@Filters({
-        @Filter(name = "dateBetween", condition = ":dateBegin <= created and :dateEnd >= created"),
-})
 public class ShopOrder {
 
     @Id

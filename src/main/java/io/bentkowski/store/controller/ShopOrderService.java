@@ -1,9 +1,6 @@
 package io.bentkowski.store.controller;
 
-import io.bentkowski.store.entity.Product;
-import io.bentkowski.store.entity.ProductRepository;
-import io.bentkowski.store.entity.ShopOrder;
-import io.bentkowski.store.entity.ShopOrderRepository;
+import io.bentkowski.store.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -51,14 +48,8 @@ public class ShopOrderService {
         intOffset = offset != null ? Integer.parseInt(offset) : null;
         intLimit = limit != null ? Integer.parseInt(limit) : null;
 
-        /*
-        sessionFactory.getCurrentSession().enableFilter("dateBetween")
-                .setParameter("dateBegin", beginDate)
-                .setParameter("dateEnd", endDate);
-        Iterable<ShopOrder> persistentCollection = sessionFactory.getCurrentSession().createQuery("from shoporder as o").list();
 
-         */
-        Iterable<ShopOrder> persistentCollection = shopOrderRepository.findAll();
+        Iterable<ShopOrder> persistentCollection = shopOrderRepository.findAll(ShopOrderSpecifications.getProductOrdersBetweenDates(beginDate, endDate));
         List<ShopOrderDto> dtoCollection = new LinkedList<>();
         persistentCollection.forEach(shopOrder -> dtoCollection.add(new ShopOrderDto(shopOrder)));
         return dtoCollection;
