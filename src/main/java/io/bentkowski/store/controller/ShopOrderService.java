@@ -22,6 +22,17 @@ public class ShopOrderService {
     @Autowired
     private ProductRepository productRepository;
 
+    @Autowired
+    private ShopOrderValidation shopOrderValidation;
+
+    public ShopOrderValidation getShopOrderValidation() {
+        return shopOrderValidation;
+    }
+
+    public void setShopOrderValidation(ShopOrderValidation shopOrderValidation) {
+        this.shopOrderValidation = shopOrderValidation;
+    }
+
     public ProductRepository getProductRepository() {
         return productRepository;
     }
@@ -57,7 +68,7 @@ public class ShopOrderService {
     }
 
     public ShopOrderDto addOrder(ShopOrderDto order) {
-        validate(order);
+        shopOrderValidation.validate(order);
         ShopOrder entity = new ShopOrder(order);
         List<ProductDto> products = order.getListOfProducts();
         List<Product> persistent = findAndValidate(products);
@@ -94,16 +105,5 @@ public class ShopOrderService {
 
     }
 
-    private void validate(ShopOrderDto shopOrderDto) {
-        /*
-        String email = productDto.getBuyersEmail();
-        javax.mail.internet.InternetAddress emailAddr = new javax.mail.internet.InternetAddress(email);
-        try {
-            emailAddr.validate();
-        }
-        catch(javax.mail.internet.AddressException x)   {
-            throw new ShopOrderValidationError(shopOrderDto,"byuersEmail",email);
-        }
-        */
-    }
+
 }
