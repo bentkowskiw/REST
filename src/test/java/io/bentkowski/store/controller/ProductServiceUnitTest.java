@@ -1,7 +1,6 @@
 package io.bentkowski.store.controller;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -13,19 +12,26 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class ProductServiceUnitTest {
 
     private final int MAX = 10;
     @Autowired
     private ProductService productService;
 
-    @BeforeEach
+    @BeforeAll
     void setUp() {
         for (int i = 0; i < MAX; i++) {
             ProductDto p1 = new ProductDto("PRODUCT-" + i, "name-" + 1, (double) i * i);
             productService.save(p1);
         }
 
+    }
+
+    void clean()    {
+        for (int i = 0; i < MAX; i++) {
+            productService.deleteById("PRODUCT-" + i);
+        }
     }
 
 
@@ -39,9 +45,10 @@ class ProductServiceUnitTest {
         assertNotNull(p1);
 
         final ProductDto p2 = new ProductDto("b", "name2", 1.0d);
-        assertThrows(PrimaryKeyNotUniqueException.class, () -> {
-            productService.save(p2);
-        });
+
+        assertThrows(PrimaryKeyNotUniqueException.class, () ->
+            productService.save(p2)
+        );
 
         final ProductDto p3 = new ProductDto("r2d2", "name2", -1.0d);
         assertThrows(ProductValidationError.class, () -> productService.save(p3));
@@ -52,14 +59,6 @@ class ProductServiceUnitTest {
     @Test
     void findAll() {
 
-
-        assertEquals(MAX, numberOfProductsFound());
-        productService.deleteById("PRODUCT-1");
-        assertEquals(MAX - 1, numberOfProductsFound());
-
-    }
-
-    private int numberOfProductsFound() {
         Iterable<ProductDto> products = productService.findAll(null, null);
         int i = 0;
         Iterator<ProductDto> iterator = products.iterator();
@@ -68,8 +67,14 @@ class ProductServiceUnitTest {
             assertNotNull(p);
             i++;
         }
-        return i;
+
+
+        assertEquals(MAX-1, i);
+
+
     }
+
+
 
 
     @Test

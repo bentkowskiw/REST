@@ -17,11 +17,30 @@ public class ProductService {
     @Autowired
     private ProductRepository productRepository;
 
+    @Autowired
+    private ProductValidation productValidation;
+
+    public ProductRepository getProductRepository() {
+        return productRepository;
+    }
+
+    public void setProductRepository(ProductRepository productRepository) {
+        this.productRepository = productRepository;
+    }
+
+    public ProductValidation getProductValidation() {
+        return productValidation;
+    }
+
+    public void setProductValidation(ProductValidation productValidation) {
+        this.productValidation = productValidation;
+    }
+
     public ProductDto save(ProductDto s) {
 
 
         if (!productRepository.existsById(s.getSku())) {
-            validate(s);
+            productValidation.validate(s);
             Product persistent = new Product(s);
             productRepository.saveAndFlush(persistent);
 
@@ -47,7 +66,7 @@ public class ProductService {
     public ProductDto updateProduct(ProductDto product, String sku) {
         Optional<Product> optionalProduct = productRepository.findById(sku);
         if (optionalProduct.isPresent()) {
-            validate(product);
+            productValidation.validate(product);
             Product persistent = optionalProduct.get();
             persistent.setName(product.getName());
             persistent.setPrice(product.getPrice());
@@ -68,14 +87,6 @@ public class ProductService {
     }
 
 
-    private void validate(ProductDto source) throws ProductValidationError {
-        if (source.getName() == null)
-            source.setName("");
-        double price = source.getPrice() != null ? source.getPrice() : 0d;
-        if (price < 0d)
-            throw new ProductValidationError(source, "price", price);
 
-        source.setPrice(price);
-    }
 
 }

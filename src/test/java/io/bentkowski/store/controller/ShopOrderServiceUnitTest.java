@@ -1,7 +1,9 @@
 package io.bentkowski.store.controller;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,6 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class ShopOrderServiceUnitTest {
 
     @Autowired
@@ -42,7 +45,7 @@ class ShopOrderServiceUnitTest {
         this.shopOrderService = shopOrderService;
     }
 
-    @BeforeEach
+    @BeforeAll
     void setUp() {
         for (int i = 0; i < 10; i++) {
             ProductDto productDto = new ProductDto("P-" + i, "Name=" + i, (double) i * 3.141592654);
@@ -63,7 +66,11 @@ class ShopOrderServiceUnitTest {
 
     @Test
     void findOrdersInPeriod() {
-        Iterable<ShopOrderDto> orders = shopOrderService.findOrdersInPeriod(LocalDateTime.now(), LocalDateTime.now(), null, null);
+        LocalDateTime beginDate, endDate;
+        beginDate = LocalDateTime.of(2000,1,1,0,0);
+        endDate = LocalDateTime.of(2999,12,31,0,0);
+
+        Iterable<ShopOrderDto> orders = shopOrderService.findOrdersInPeriod(beginDate, endDate, null, null);
         Iterator<ShopOrderDto> iterator = orders.iterator();
 
         int i = 0;
