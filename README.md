@@ -1,6 +1,8 @@
 # REST
 
  Example Product RESTful application with Spring Boot framework
+ 
+ The functionality can be found here: https://github.com/bentkowskiw/REST/blob/master/Java_Home_Assignment.pdf
 
  See documentation of API in doc folder
 
